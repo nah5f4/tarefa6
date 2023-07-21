@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Profile</title>
+</head>
+<body>
+  <section id="github-section">
+    <h2>GitHub Profile</h2>
+    <div id="github-info"></div>
+  </section>
+
+  <script>
+    const username = "seu_nome_de_usuario"; // Substitua "seu_nome_de_usuario" pelo seu nome de usuário do GitHub
+
+    // Função para fazer a chamada à API do GitHub e exibir as informações na página
+    async function fetchGitHubProfile() {
+      const response = await fetch(`https://api.github.com/users/${username}`);
+      const data = await response.json();
+
+      // Elemento onde as informações serão exibidas
+      const githubInfoDiv = document.getElementById("github-info");
+
+      if (response.ok) {
+        // Criação de elementos para exibir as informações
+        const avatarImg = document.createElement("img");
+        avatarImg.src = data.avatar_url;
+        avatarImg.alt = `${username}'s Avatar`;
+        githubInfoDiv.appendChild(avatarImg);
+
+        const loginParagraph = document.createElement("p");
+        loginParagraph.textContent = `Login: ${data.login}`;
+        githubInfoDiv.appendChild(loginParagraph);
+
+        const bioParagraph = document.createElement("p");
+        bioParagraph.textContent = `Bio: ${data.bio || "N/A"}`;
+        githubInfoDiv.appendChild(bioParagraph);
+
+        // Outras informações do perfil do GitHub podem ser exibidas da mesma maneira
+      } else {
+        githubInfoDiv.textContent = `Erro ao obter informações do perfil do GitHub para o usuário "${username}"`;
+      }
+    }
+
+    // Chama a função para buscar as informações do perfil do GitHub
+    fetchGitHubProfile();
+  </script>
+</body>
+</html>
